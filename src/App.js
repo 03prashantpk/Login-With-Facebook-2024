@@ -7,6 +7,7 @@ const App = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [isLogin, setIsLogin] = useState(false);
+  const [savedID, setSavedAppID] = useState('');
 
   useEffect(() => {
     (function(d, s, id) {
@@ -20,9 +21,10 @@ const App = () => {
 
   useEffect(() => {
     window.fbAsyncInit = function() {
-      const AppID = localStorage.getItem('AppID');
+      setSavedAppID(localStorage.getItem('AppID'));
+      const savedID = localStorage.getItem('AppID') || '947310100426616';
       window.FB.init({
-        appId: AppID || '947310100426616',
+        appId: savedID || '947310100426616',
         cookie: true,
         xfbml: true,
         version: 'v19.0'
@@ -87,10 +89,12 @@ const App = () => {
   const saveAppID = () => {
     const AppID = document.getElementById('AppID').value;
     localStorage.setItem('AppID', AppID);
+    setSavedAppID(AppID);
   }
 
   const ClearAppID = () => {
     localStorage.removeItem('AppID');
+    setSavedAppID('');
   }
 
   const CurrentUrl = window.location.href;
@@ -101,19 +105,25 @@ const App = () => {
       <div className="Content">
         <h1>Facebook Login</h1>
         <div className="clas">
-          <p className='SavedAppID'>Saved App ID: {localStorage.getItem('AppID')} <button className='ClearAppID' onClick={ClearAppID}> Clear</button></p>
-          <input type="text" name="" placeholder='Add Your App ID' id="AppID" />
-          <button onClick={saveAppID}>Save</button>
           <p>I'm using, <span>App type: Consumer - App ID - default</span><br /> Try Using, <span>App type: Business - App ID</span></p>
         
-          <p>Add your App ID and Add <span>{CurrentUrl}</span>in: <br />
-            Allowed Domains for the JavaScript SDK at  <a href="https://developers.facebook.com/apps/">developers.facebook.com/apps</a> </p>
+          <p>Add your App ID and Add <span>{CurrentUrl}</span>in: <br />Allowed Domains for the JavaScript SDK at  <a href="https://developers.facebook.com/apps/">developers.facebook.com/apps</a> </p>
+      
+            <hr />
+
+          <p className='SavedAppID'>Saved App ID: {localStorage.getItem('AppID')} <button className='ClearAppID' onClick={ClearAppID}> Clear</button></p>
+
+          <p> <span>{localStorage.getItem('AppID') ? "Clear to login with Consumer App ID" : ""}</span></p>
+          
+          <input type="text" name="" placeholder='Add Your Business App - App ID' id="AppID" />
+          <button onClick={saveAppID}>Save</button>
+          
         </div>
         <br />
         {isLogin ? 
           <button onClick={logout}>Logout</button>
           :
-          <button onClick={loginWithFacebook}>Login with Facebook</button>
+          <button onClick={loginWithFacebook}>Login with Facebook  {localStorage.getItem('AppID') ? "Using Business App ID" : "Using Consumer App ID"} </button>
         }
         <div className="user-card">
           <h1>{userID ? "Your Data" : ""}</h1>
