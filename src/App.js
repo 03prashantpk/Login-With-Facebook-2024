@@ -95,6 +95,7 @@ const App = () => {
   const ClearAppID = () => {
     localStorage.removeItem('AppID');
     setSavedAppID('');
+    window.location.reload();
   }
 
   const CurrentUrl = window.location.href;
