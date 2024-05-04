@@ -90,6 +90,7 @@ const App = () => {
     const AppID = document.getElementById('AppID').value;
     localStorage.setItem('AppID', AppID);
     setSavedAppID(AppID);
+    window.location.reload();
   }
 
   const ClearAppID = () => {
