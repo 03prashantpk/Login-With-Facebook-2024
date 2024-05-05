@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 body {
@@ -9,8 +9,8 @@ body {
 }
 
 .image {
-  width: 100%;
-  height: 50vh;
+  width: 20%;
+  height: 100vh;
   background: url('https://source.unsplash.com/1600x900/?mountain,road,forest,mistforest') center/cover no-repeat;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   position: relative;
@@ -27,12 +27,12 @@ body {
 }
 
 .image::before {
-  content: 'Facebook Auth';
+  content: 'Facebook Graph API';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #007bff;
+  color: #fff;
   font-size: 2rem;
   font-weight: 700;
   z-index: 9999;
@@ -40,14 +40,19 @@ body {
 }
 
 .Content {
-  width: 100%;
-  height: 50%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;  
-  line-height: 3cap;
+  width: 80%;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 0px;
+  overflow: hidden;
+}
+.val{
+  background-color: #dc3545;
+  padding: 4px;
+  color: #FFF;
+  margin: 2px;
+  border-radius: 2px;
+  width: fit-content;
 }
 
 hr{
@@ -59,12 +64,129 @@ h3{
   color: green;
   font-weight: 600;
 }
+.value{
+  word-wrap: break-word;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .clas {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background-color: #007bff;
+  padding: 10px;
+}
+.cache-controls{
+  width: 20%;
+}
+.save-data{
+  width: 50%;
+}
+.save-data > button{
+  background-color: #FFF;
+  color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.PageList{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+  background-color: #f7fbff;
+  padding: 10px;
+}
+
+.selectedpageaccstoken{
+  background-color: #0056b3;
+  color: #FFF;
+  padding: 4px;
+}
+
+.SelectedPageLikes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+  background-color: #f7fbff;
+  padding: 10px;
+  
+}
+
+.selectedPageImpression{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  flex-direction: row;
+  height: 50vh;
+  
+}
+.ctaimpression{
+  height: 50vh;
+  width: 28%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  background-color: #007bff;
+  gap: 20px;
+  padding: 10px;
+}
+.impression{
+  width: 70%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  background-color: antiquewhite;
+}
+.ib{
+  color: #007bff;
+  background-color: #f7fbff;
+}
+.ttl{
+  color: #dc3545;
+}
+.dis{
+  color: #007bff;
+  background-color: #ccc;
+}
+select {
+  padding: 6px 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+}
+
+
 .SavedAppID {
-  margin-bottom: 10px;
+  font-size: 14px;
+}
+i{
+  padding: 5px;
+}
+
+.logWithFb{
+  background-color: #FFF;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 15px;
+  font-weight: 600;
+
 }
 
 input[type="text"] {
@@ -120,18 +242,3 @@ span {
   margin-bottom: 10px;
 }
 
-@media (min-width: 768px) {
-  .App {
-    flex-direction: row;
-  }
-
-  .Content {
-    width: 70%;
-    height: auto;
-  }
-
-  .image {
-    width: 30%;
-    height: 100vh;
-  }
-}
