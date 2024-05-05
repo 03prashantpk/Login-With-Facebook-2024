@@ -24,10 +24,10 @@ const App = () => {
       setSavedAppID(localStorage.getItem('AppID'));
       const savedID = localStorage.getItem('AppID') || '947310100426616';
       window.FB.init({
-        appId: savedID || '947310100426616',
+        appId: savedID || '965956698588022',
         cookie: true,
         xfbml: true,
-        version: 'v19.0'
+        version: 'v19.0',
       });
         
       window.FB.AppEvents.logPageView();
@@ -70,7 +70,11 @@ const App = () => {
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    });
+    },
+    {
+      config_id: '790630596351702'
+    }
+  );
   }
 
   const logout = () => {
