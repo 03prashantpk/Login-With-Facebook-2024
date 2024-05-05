@@ -123,6 +123,11 @@ h3{
   padding: 10px;
   
 }
+.yellow{
+  color: #ffc107;
+  padding: 4px;
+
+}
 
 .selectedPageImpression{
   display: flex;

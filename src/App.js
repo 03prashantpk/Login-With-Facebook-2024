@@ -242,7 +242,7 @@ const App = () => {
         {
           pageAccessToken && (
             <>
-              <p className='selectedpageaccstoken'>Selected Page Id: <span>{pageId}</span> & Access Token:  <span>{pageAccessToken.slice(0, 10) + '...' + pageAccessToken.slice(-10)}</span></p>
+              <p className='selectedpageaccstoken'>Selected Page Id: <span className="yellow">{pageId}</span> & Access Token:  <span className="yellow">{pageAccessToken.slice(0, 10) + '...' + pageAccessToken.slice(-10)}</span></p>
               <button onClick={getSelectedPageLikes}>Get Selected Page Likes</button>
             </>
           
