@@ -2,6 +2,13 @@
   text-align: center;
   display: flex;
   flex-direction: row;
+  transition-duration: 0.6s;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition-duration: 0.6s;
 }
 
 body {
@@ -53,12 +60,26 @@ body {
   margin: 2px;
   border-radius: 2px;
   width: fit-content;
+  animation: popAppear 0.5s 1;
+}
+
+/* odd child with fast and pop */
+.val:nth-child(odd){
+  animation: popAppear 0.1s 1;
+}
+
+.val:hover{
+  animation: bubblePopAppear 0.1s 1;
+  cursor: pointer;
 }
 
 hr{
   margin: 20px 0;
   border: #0057b32a 1px solid;
   width: 100%;
+}
+.lkbtn{
+  margin-top: 10px;
 }
 h3{
   color: green;
@@ -72,9 +93,10 @@ h3{
   gap: 10px;
   flex-direction: row;
   flex-wrap: wrap;
+  flex-grow: 1;
 }
 .clas {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,6 +129,10 @@ h3{
   padding: 10px;
 }
 
+.PageList p {
+  padding: 4px  0;
+}
+
 .selectedpageaccstoken{
   background-color: #0056b3;
   color: #FFF;
@@ -122,6 +148,7 @@ h3{
   background-color: #f7fbff;
   padding: 10px;
   
+  
 }
 .yellow{
   color: #ffc107;
@@ -134,12 +161,14 @@ h3{
   justify-content: center;
   align-items: center;
   gap: 0px;
+  width: 100%;
   flex-direction: row;
-  height: 50vh;
+  height: 60vh;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   
 }
 .ctaimpression{
-  height: 50vh;
+  height: 60vh;
   width: 28%;
   display: flex;
   justify-content: start;
@@ -148,13 +177,25 @@ h3{
   background-color: #007bff;
   gap: 20px;
   padding: 10px;
+  color: #fff;
 }
+
+input[type="date"] {
+  padding: 6px 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+}
+
 .impression{
   width: 70%;
-  height: 100%;
+  height: 60vh;
   overflow-y: scroll;
   padding: 10px;
   background-color: antiquewhite;
+  text-align: start;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 .ib{
   color: #007bff;
@@ -162,10 +203,14 @@ h3{
 }
 .ttl{
   color: #dc3545;
+  font-weight: 600;
+  
 }
 .dis{
   color: #007bff;
   background-color: #ccc;
+  padding: 4px 6px;
+  border-radius: 4px;
 }
 select {
   padding: 6px 16px;
@@ -247,3 +292,50 @@ span {
   margin-bottom: 10px;
 }
 
+
+@keyframes bubblePopAppear {
+  0% {
+    opacity: 0;
+    /* add more */
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    /* add more */
+    transform: scale(1);
+    cursor: pointer;
+  }
+}
+
+@keyframes popAppear {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #007bff transparent ;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 20px;
+  border: 3px solid transparent;
+}

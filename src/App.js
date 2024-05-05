@@ -16,6 +16,7 @@ const App = () => {
   const [sinceDate, setSinceDate] = useState('');
   const [untilDate, setUntilDate] = useState('');
   const [pgImpression, setPgImpression] = useState(false);
+  const [Loading, setLoading] = useState("");
 
   const [pageAccessCredentials, setPageAccessCredentials] = useState({ userId: '', pageToken: '' });
 
@@ -151,15 +152,35 @@ const App = () => {
     }
   }
 
+  const handleIfSinceAndUntilIsMoreThan90Days = (since, until) => {
+    const sinceDate = new Date(since);
+    const untilDate = new Date(until);
+    const diffTime = Math.abs(untilDate - sinceDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays > 90) {
+      return true;
+    }
+    return false;
+  }
+
   const handleSinceChange = (e) => {
     setSinceDate(e.target.value);
+    if (handleIfSinceAndUntilIsMoreThan90Days(e.target.value, untilDate)) {
+      alert('Since and Until date should not be more than 90 days');
+      setSinceDate('');
+    }
   }
 
   const handleUntilChange = (e) => {
     setUntilDate(e.target.value);
+    if (handleIfSinceAndUntilIsMoreThan90Days(sinceDate, e.target.value)) {
+      alert('Since and Until date should not be more than 90 days');
+      setUntilDate('');
+    }
   }
 
   const getPageImpression = (since, until) => {
+    setLoading('Loading...');
     try {
       if (window.FB) {
         window.FB.api(
@@ -174,6 +195,7 @@ const App = () => {
             console.log(response);
             setPageImpression(response.data);
             setPgImpression(true);
+            setLoading('');
           }
         );
       }
@@ -203,7 +225,10 @@ const App = () => {
           <button onClick={saveAppID}>Save</button>
           </div>
 
+          <div>
+          
           {isLogin ? 
+          
           <button className='logWithFb' onClick={logout}>
             <i class="fab fa-facebook-f"></i>
             Logout</button>
@@ -211,7 +236,12 @@ const App = () => {
           <button className='logWithFb' onClick={loginWithFacebook}> 
             <i class="fab fa-facebook-f"></i>
           Login with Facebook </button>
-        }
+          }
+          <br />
+          <span style={{color: "white"}}>{userName} - 
+           {userEmail.slice(0, 10) + '...' + userEmail.slice(-10)}</span>
+          </div>
+          
           
         </div>
 
@@ -243,7 +273,7 @@ const App = () => {
           pageAccessToken && (
             <>
               <p className='selectedpageaccstoken'>Selected Page Id: <span className="yellow">{pageId}</span> & Access Token:  <span className="yellow">{pageAccessToken.slice(0, 10) + '...' + pageAccessToken.slice(-10)}</span></p>
-              <button onClick={getSelectedPageLikes}>Get Selected Page Likes</button>
+              <button className='lkbtn' onClick={getSelectedPageLikes}>Get Selected Page Likes</button>
             </>
           
         )
@@ -262,24 +292,65 @@ const App = () => {
             <div className="selectedPageImpression">
           <div className="ctaimpression">
             <h2>Get Selected Page Impression</h2>
-            <p>Since:  <input type="date" placeholder='Since' value={sinceDate} onChange={handleSinceChange} /></p>
+            <p>Since: <input type="date" placeholder='Since' value={sinceDate} onChange={handleSinceChange} /></p>
             <p>Until: <input type="date" placeholder='Until' value={untilDate} onChange={handleUntilChange} /></p>
             <button className='ib' onClick={() => getPageImpression(sinceDate, untilDate)}>Get Page Impression</button>
+            <br />
+
+            <div style={{color: "white", fontWeight: 600}}>
+              <span style={{color: "white"}}>Red: 0 | </span>
+              <span style={{color: "white"}}>Orange: 1 - 100 |</span>
+              <span style={{color: "white"}}>Yellow: 101 - 200 |</span>
+              <span style={{color: "white"}}>Green: 201 - 300 |</span>
+              <span style={{color: "white"}}>Blue: 301+ </span>
+            </div>
+           
+            
           </div>
 
           <div className="impression">
-            {getPagesImpression.map((impression, index) => (
-              <div key={index}>
-              <p className='ttl'>Title: {impression.title}</p>
-              <p className='dis'>Description: {impression.description}</p>
-              <p>
-              Value:
-                <span className="value"> {impression.values.map((value, index) => (
-                  <span className="val" key={index}>{value.value}</span>
-                ))}</span>
-              </p>
-              </div>
-            ))}
+            <h2>Page Impression</h2>
+            {Loading ? (
+              <p>{Loading}</p>
+            ) : (
+              getPagesImpression.map((impression, index) => (
+                <div key={index}>
+                  <p className='ttl'>Title: {impression.title}</p>
+                  <p className='dis'>Description: {impression.description}</p>
+                  <p>
+                    Value:
+                    <span className="value">
+                      {impression.values.map((value, index) => (
+                        <span 
+                        className="val"
+                        style={{
+                          backgroundColor: 
+                            value.value === 0 ? 'red' :
+                            value.value >= 1 && value.value <= 100 ? 'orange' :
+                            value.value >= 101 && value.value <= 200 ? '#ffc107' :
+                            value.value >= 201 && value.value <= 300 ? 'green' :
+                            'blue' 
+                        }}
+                        key={index}
+                      >
+                        {value.value}
+                      </span>
+                      ))}
+                    </span>
+                  </p>
+                  <p className='period'>Period: {impression.period}</p>
+                  <p className='id'>ID: 
+                      <a href='https://developers.facebook.com/docs/graph-api/reference/v19.0/insights' target='_blank' rel='noreferrer'> 
+                      {impression.id} </a>
+                  </p>
+                  <p className='name'>Name: {impression.name}</p>
+                  <p className='valCount'>Value Count: {impression.values.length}</p>
+                  <hr />
+                </div>
+              ))
+            )}
+
+            
           </div>
         </div>
           )
