@@ -110,6 +110,7 @@ const App = () => {
       <div className="image"></div>
       <div className="Content">
         <h1>Facebook Login</h1>
+        <h4>Fixed: Working Fine Now</h4>
         <div className="clas">
           <p>I'm using, <span>App type: Consumer - App ID - default</span><br /> Try Using, <span>App type: Business - App ID</span></p>
         

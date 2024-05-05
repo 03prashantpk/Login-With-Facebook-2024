@@ -55,6 +55,10 @@ hr{
   border: #0057b32a 1px solid;
   width: 100%;
 }
+h3{
+  color: green;
+  font-weight: 600;
+}
 .clas {
   margin-bottom: 20px;
 }
