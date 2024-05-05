@@ -183,6 +183,12 @@ const App = () => {
     }
   }
 
+  const styleBodergreen = {
+    border: '1px solid green',
+    padding: '10px',
+    margin: '10px'
+  }
+
   return (
     <div className="App">
       <div className="image"></div>
@@ -219,7 +225,9 @@ const App = () => {
   
               <div className="pageListData">
                 <p>All the pages Related to this account</p>
-                <select id="pageId" onChange={handlePageSelect} >
+                <select id="pageId" onChange={handlePageSelect} 
+                  style={allPagesToThisAccount.length >= 1 ? {border: '1px solid green'} : {border: '1px solid red'}}
+                >
                   <option value="">Select Page</option>
                   {allPagesToThisAccount.map((page, index) => (
                     <option key={index} value={page.id}>{page.name}</option>
